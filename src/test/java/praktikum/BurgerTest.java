@@ -7,9 +7,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.List;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
@@ -52,7 +51,7 @@ public class BurgerTest {
     public void moveIngredientTest() {
         burger.ingredients.add(ingredient1);
         burger.ingredients.add(ingredient2);
-        burger.moveIngredient(0,1);
+        burger.moveIngredient(0, 1);
         assertEquals("Failed to move an ingredient", ingredient1, burger.ingredients.get(1));
     }
 
@@ -69,6 +68,26 @@ public class BurgerTest {
 
     @Test
     public void getReceiptTest() {
+        burger.setBuns(bun);
+        Mockito.when(bun.getName()).thenReturn("white bun");
+        Mockito.when(bun.getPrice()).thenReturn(200f);
 
+        burger.ingredients.add(ingredient1);
+        Mockito.when(ingredient1.getType()).thenReturn(IngredientType.SAUCE);
+        Mockito.when(ingredient1.getName()).thenReturn("chili sauce");
+        Mockito.when(ingredient1.getPrice()).thenReturn(300f);
+
+        burger.ingredients.add(ingredient2);
+        Mockito.when(ingredient2.getType()).thenReturn(IngredientType.FILLING);
+        Mockito.when(ingredient2.getName()).thenReturn("dinosaur");
+        Mockito.when(ingredient2.getPrice()).thenReturn(200f);
+
+        String expected = "(==== white bun ====)" +
+                "\r\n= sauce chili sauce =" +
+                "\r\n= filling dinosaur =" +
+                "\r\n(==== white bun ====)\r\n" +
+                "\r\nPrice: 900,000000\r\n";
+
+        assertEquals("Failed to get burger receipt", expected, burger.getReceipt());
     }
 }
