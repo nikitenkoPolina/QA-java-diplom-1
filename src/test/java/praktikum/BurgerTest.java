@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
@@ -53,5 +54,21 @@ public class BurgerTest {
         burger.ingredients.add(ingredient2);
         burger.moveIngredient(0,1);
         assertEquals("Failed to move an ingredient", ingredient1, burger.ingredients.get(1));
+    }
+
+    @Test
+    public void getPriceTest() {
+        burger.setBuns(bun);
+        burger.ingredients.add(ingredient1);
+        Mockito.when(bun.getPrice()).thenReturn(100f);
+        Mockito.when(ingredient1.getPrice()).thenReturn(50f);
+        float expected = 250f;
+        float actual = burger.getPrice();
+        assertEquals("Failed to get burger price", expected, actual, 0.0);
+    }
+
+    @Test
+    public void getReceiptTest() {
+
     }
 }
