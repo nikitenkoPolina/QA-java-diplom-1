@@ -1,8 +1,9 @@
 package praktikum;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class BunTest {
     private Bun bun;
@@ -25,6 +26,4 @@ public class BunTest {
         Float expected = 100f;
         assertEquals("Failed to get bun price", expected, actual);
     }
-
-
 }
